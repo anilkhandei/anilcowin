@@ -22,18 +22,21 @@
                         <form>
                         <div class="mb-3">
                             <label for="districtId" class="form-label">District</label>
-                            <input type="text"  class="form-control" name="districtId" id="districtId" placeholder="446">
+                            <input type="text"  class="form-control" name="districtId" id="districtId" placeholder="enter 446 for khurda">
                         </div>
                         <div class="mb-3">
                             <label for="districtId" class="form-label">Zipcode</label>
-                            <input type="text"  class="form-control" name="zipCode" id="zipCode" placeholder="751024">
+                            <input type="text"  class="form-control" name="zipCode" id="zipCode" placeholder="enter 752101 for balianta area">
                         </div>
                         <div class="mb-3">
-                            <label for="dateOfSearch" class="form-label">District</label>
-                            <input type="text"  class="form-control" name="dateOfSearch" id="dateOfSearch" placeholder="09-05-2021">
+                            <label for="dateOfSearch" class="form-label">Date Of Search</label>
+                            <input type="date" value=getCurrentDate()  class="form-control" name="dateOfSearch" id="dateOfSearch" placeholder="09-05-2021">
                         </div>
                         <div class="mb-3">
                             <button type="button" class="btn btn-primary" id="btnGetAppts">Get Appointments</button>
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-warning" id="btnClearInput">Clear</button>
                         </div>
                         </form>
                        
@@ -61,6 +64,8 @@
             const dateOfSearch=document.querySelectorAll('#dateOfSearch')[0];
             const responseZone=document.querySelectorAll('#responseZone')[0];
             const zipCode=document.querySelectorAll('#zipCode')[0];
+            const btnClearInput=document.querySelectorAll('#btnClearInput')[0];
+
             var centersList;
            
             districtId.addEventListener('change',function(){
@@ -130,18 +135,18 @@
                                     
                                     responseZone.appendChild(newAlert);
                                 }
-                                else{
-                                    let newAlert=document.createElement('div');
-                                    let classAttr=document.createAttribute('class');
-                                    classAttr.value='alert alert-info';
-                                    let roleAttr=document.createAttribute('role');
-                                    roleAttr.value='alert';
-                                    newAlert.setAttributeNode(classAttr);
-                                    newAlert.setAttributeNode(roleAttr);
-                                    newAlert.innerText=`The center name : ${c.name}, session date: ${session.date}, vaccine: ${session.vaccine} and number of available capacity= ${session.available_capacity}`;
+                                // else{
+                                //     let newAlert=document.createElement('div');
+                                //     let classAttr=document.createAttribute('class');
+                                //     classAttr.value='alert alert-info';
+                                //     let roleAttr=document.createAttribute('role');
+                                //     roleAttr.value='alert';
+                                //     newAlert.setAttributeNode(classAttr);
+                                //     newAlert.setAttributeNode(roleAttr);
+                                //     newAlert.innerText=`The center name : ${c.name}, session date: ${session.date}, vaccine: ${session.vaccine} and number of available capacity= ${session.available_capacity}`;
                                     
-                                    responseZone.appendChild(newAlert);
-                                }
+                                //     responseZone.appendChild(newAlert);
+                                // }
                                     }
                                 });
                                 
@@ -150,11 +155,21 @@
 
 
                         if(responseZone.innerHTML==''){
-                            responseZone.innerHTML='<p>No appointments found!!</p>'
+                            responseZone.innerHTML='<p>No available appointments found, try again later!!</p>'
                         }
 
                     });
             }
+
+            function getCurrentDate(){
+                return new Date().toLocaleDateString();
+            }
+            btnClearInput.addEventListener('click',function(e){
+                districtId.removeAttribute('disabled');
+                zipCode.removeAttribute('disabled');
+                districtId.value='';
+                zipCode.value='';
+            })
     </script>
 </body>
 </html>
